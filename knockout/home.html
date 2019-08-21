@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>knockout</title>
+	  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+      <script src="knockout.js"></script>
+   </head>
+   <body>
+       <div data-bind="with:sitedetail">
+            <h1 data-bind="text:name"></h1>
+       </div>
+       <div>
+            <ul class="list-group" data-bind="foreach:categorylist">
+                <li class="list-group-item"  >
+					<h5 data-bind="attr:{title:value,jsonId:value},text:key,click:Alertitem"></h5>
+				</li>
+            </ul>
+       </div>
+      <script>
+          var viewModel = function () {
+               var self = this;
+                self.isShow = ko.observable(1);
+				self.sitedetail = ko.observable();
+                self.categorylist = ko.observableArray([]);
+				
+                GetSitetDetail()
+
+                GetSitetDetail:function GetSitetDetail(){
+                    var arylist = {
+                        name:'Manager',
+                        address:'陕西西安'
+                    };
+                    var objary = [
+                        {key:"管理员", value:"MANAGER"},
+                        {key:"系统管理员", value:"SA"}, 
+                        {key:"渠道商", value:"PARTNER"}, 
+                        {key:"代理商", value:"AGENT"}
+                    ];
+                    self.sitedetail(arylist)
+                    self.categorylist(objary)
+                };
+	
+          }
+		  function Alertitem(e){
+               console.log(e)
+          }
+          ko.applyBindings(new viewModel());
+      </script>
+   </body>
+</html>
